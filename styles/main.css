@@ -30,3 +30,12 @@ h1{
     justify-content: center;
     margin-bottom: 22px;
 }
+
+.card{
+    width: 100px;
+    height: 142;
+    perspective: 700px;
+    cursor: pointer;
+    border-radius: 12px;
+    user-select: none;
+}
