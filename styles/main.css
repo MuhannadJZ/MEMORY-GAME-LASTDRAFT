@@ -67,10 +67,22 @@ h1{
     box-shadow:0 4px 8px rgba(0,0,0,0.2) ;
     user-select: none;
 }
-
-.card-front {
+.card-front{
+    background-color: #1394f1;
+    color: white;
+}
+.card-back {
     background-color: #0684de;
-    color: #212121;
+    color: #fefbfb;
     transform:rotateY(180deg);
     padding: 6px;
+}
+
+.card-back img{
+    width: 80px;
+    height:100px;
+    object-fit: contain;
+    border-radius: 4px;
+    user-select: none;
+    pointer-events: none;
 }
