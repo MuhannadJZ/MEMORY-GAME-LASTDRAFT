@@ -106,3 +106,13 @@ startTimer();
 
 document.querySelector('#RestartButton').addEventListener('click, resetGame');
 document.querySelector('#NextDifficulty').addEventListener('click,resetGame');
+
+
+document.addEventListener('DOMContentLoaded',() =>{
+    renderCards();
+    setupCardClicks();
+    startTimer();
+
+
+
+});
