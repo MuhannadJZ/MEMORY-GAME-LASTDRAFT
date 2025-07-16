@@ -23,3 +23,10 @@ h1{
     color:#e63f3a;
     min-height: 26px;
 }
+
+.card-grid {
+    display: grid;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 22px;
+}
