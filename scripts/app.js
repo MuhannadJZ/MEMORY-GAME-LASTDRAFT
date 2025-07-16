@@ -38,3 +38,25 @@ function renderCards(){
         container.appendChild(cardE1);
     });
 }
+
+let flippedCards = [];
+
+function setupCardClicks() {
+  const allCards = document.querySelectorAll('.card');
+  allCards.forEach(card => {
+    card.addEventListener('click', () => {
+      if (
+        flippedCards.length >= 2 ||
+        card.classList.contains('flipped') ||
+        card.classList.contains('matched')
+      ) return;
+
+      card.classList.add('flipped');
+      flippedCards.push(card);
+
+      if (flippedCards.length === 2) {
+        checkMatch();
+      }
+    });
+  });
+}
