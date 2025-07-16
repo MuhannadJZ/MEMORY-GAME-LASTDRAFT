@@ -43,7 +43,7 @@ function startTimer() {
 
     if (game.timeLeft <= 0) {
       clearInterval(game.timer);
-      showMessage(" Time's up! Try again.");
+      showMessage(" Time's up");
       disableAllCards();
     }
   }, 1000);
@@ -126,7 +126,7 @@ function checkMatch() {
 
     if (game.matchedCards.length === getGridSize() ** 2) {
       clearInterval(game.timer);
-      showMessage(" You matched all cards! Well done!");
+      showMessage("CONGRATULATIONS YOU WON !!!!!!!!");
       disableAllCards();
     }
   } else {
@@ -153,7 +153,7 @@ elements.nextDifficultyButton.addEventListener("click", () => {
     game.level++;
     createCards();
   } else {
-    showMessage("You've completed all difficulty levels!");
+    showMessage("Completed all difficulty levels!");
   }
 });
 
