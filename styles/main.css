@@ -67,3 +67,10 @@ h1{
     box-shadow:0 4px 8px rgba(0,0,0,0.2) ;
     user-select: none;
 }
+
+.card-front {
+    background-color: #0684de;
+    color: #212121;
+    transform:rotateY(180deg);
+    padding: 6px;
+}
