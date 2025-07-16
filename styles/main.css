@@ -86,3 +86,27 @@ h1{
     user-select: none;
     pointer-events: none;
 }
+
+.buttons{
+    margin-top:10px;
+}
+
+button{
+    font-size: 18px;
+    padding: 9px 18px;
+    margin-top:0;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 0;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background-color: #024575;
+    color:white;
+    transition: background-color 0.4s;
+    user-select: none;
+}
+
+button:hover{
+    background-color: #022640;
+}
