@@ -1,118 +1,165 @@
-const cardData = [
-    {id: 1, img: '668.png'},
-    {id: 2, img: 'alabraaj.png'},
-    {id: 3, img: 'bacon.png'},
-    {id: 4, img: 'baskinrobbins.png'},
-    {id: 5, img: 'cinecafe.png'},
-    {id: 6, img: 'cinnabon.png'}
-    {id: 7, img: 'dose.png'}
-    {id: 8, img: 'haji.png'}
-    {id: 9, img: 'hcr.png'}
-    {id: 10, img: 'jan.png'}
-    {id: 11, img: 'jasmislogo.png'}
-    {id: 12, img: 'lilou.png'}
-    {id: 13, img: 'samona.png'}
-    {id: 14, img: 'shay.png'}
-    {id: 15, img: 'trentren.png'}
-    {id: 16, img: 'vapiano.png'}
-    {id: 17, img: 'villamamas.png'}
-    {id: 18, img: 'zaytzaytoon.png'}
-]
+const elements = {
+  cardContainer: document.querySelector("#C-container"),
+  restartButton: document.querySelector("#RestartButton"),
+  nextDifficultyButton: document.querySelector("#NextDifficulty"),
+  timerDisplay: document.querySelector("#Timer"),
+  messageDisplay: document.querySelector("#Message"),
+};
 
-const container = document.querySelector('#C-container')
-let cards=[];
+const game = {
+  level: 0,
+  flippedCards: [],
+  matchedCards: [],
+  timer: null,
+  timeLeft: 0,
+  cardImages: [],
+};
 
-function renderCards(){
-    cards= [...cardData, ...cardData].sort(()=>Math.random()-0.5);
-    container.innerHTML='';
+const allImages = [
+  "668", "alabraaj", "bacon", "baskinrobbins", "cinecafe", "cinnabon",
+  "dose", "haji", "hcr", "jan", "jasmislogo", "lilou", "samona",
+  "shay", "trentren", "vapiano", "villamamas", "zaytzaytoon"
+];
 
-    cards.forEach(card => {
-        const cardE1 = document.createElement('div');
-        cardE1.classList.add('card');
-        cardE1.dataset.id= card.id;
-        cardE1.innerHTML=`<div class="card-inner">
-        <div class="card-front">?</div>
-        <div class="card-back"><img src="images/${card.img}" alt=""/></div>
-        </div>
-        `;
-        container.appendChild(cardE1);
-    });
+const levelTimes = [10, 30, 70];
+
+function shuffle(array) {
+  for (let i = array.length -1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
-
-let flippedCards = [];
-
-function setupCardClicks() {
-  const allCards = document.querySelectorAll('.card');
-  allCards.forEach(card => {
-    card.addEventListener('click', () => {
-      if (
-        flippedCards.length >= 2 ||
-        card.classList.contains('flipped') ||
-        card.classList.contains('matched')
-      ) return;
-
-      card.classList.add('flipped');
-      flippedCards.push(card);
-
-      if (flippedCards.length === 2) {
-        checkMatch();
-      }
-    });
-  });
-}
-const timerEl = document.querySelector('#Timer');
-let timeLeft = 60;
-let timerInterval;
 
 function startTimer() {
-  clearInterval(timerInterval);
-  timeLeft = 60;
+  clearInterval(game.timer);
+  game.timeLeft = levelTimes[game.level];
   updateTimer();
-  timerInterval = setInterval(() => {
-    timeLeft--;
+  clearMessage();
+
+  game.timer = setInterval(() => {
+    game.timeLeft--;
     updateTimer();
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      showMessage("Time's up!", "#d9534f");
+
+    if (game.timeLeft <= 0) {
+      clearInterval(game.timer);
+      showMessage(" Time's up! Try again.");
       disableAllCards();
     }
   }, 1000);
 }
 
 function updateTimer() {
-  timerEl.textContent = `Time: ${timeLeft}s`;
+  elements.timerDisplay.textContent = `Time: ${game.timeLeft}s`;
 }
-const messageEl = document.querySelector('#Message');
 
-function showMessage(msg, color) {
-  messageEl.textContent = msg;
-  messageEl.style.color = color;
+function showMessage(msg) {
+  elements.messageDisplay.textContent = msg;
+}
+
+function clearMessage() {
+  elements.messageDisplay.textContent = "";
+}
+
+function getGridSize() {
+  return [2, 4, 6][game.level];
+}
+
+function createCards() {
+  elements.cardContainer.innerHTML = "";
+  game.flippedCards = [];
+  game.matchedCards = [];
+  clearMessage();
+
+  const size = getGridSize();
+  const totalCards = size * size;
+  const pairs = totalCards / 2;
+
+  const shuffledImages = shuffle([...allImages]).slice(0, pairs);
+
+  game.cardImages = shuffle([...shuffledImages, ...shuffledImages]);
+
+  elements.cardContainer.style.gridTemplateColumns = `repeat(${size}, 100px)`;
+
+  for (let i = 0; i < totalCards; i++) {
+    const card = document.createElement("div");
+    card.classList.add("card");
+    card.dataset.value = game.cardImages[i];
+    card.innerHTML = `
+      <div class="card-inner">
+        <div class="card-front">?</div>
+        <div class="card-back">
+          <img src="assets/${game.cardImages[i]}.png" alt="${game.cardImages[i]}" />
+        </div>
+      </div>
+    `;
+    card.addEventListener("click", () => flipCard(card));
+    elements.cardContainer.appendChild(card);
+  }
+
+  startTimer();
+}
+
+function flipCard(card) {
+  if (
+    game.flippedCards.length < 2 &&
+    !card.classList.contains("flipped") &&
+    !game.matchedCards.includes(card)
+  ) {
+    card.classList.add("flipped");
+    game.flippedCards.push(card);
+
+    if (game.flippedCards.length === 2) {
+      checkMatch();
+    }
+  }
+}
+
+function checkMatch() {
+  const [card1, card2] = game.flippedCards;
+  const val1 = card1.dataset.value;
+  const val2 = card2.dataset.value;
+
+  if (val1 === val2) {
+    game.matchedCards.push(card1, card2);
+    game.flippedCards = [];
+
+    if (game.matchedCards.length === getGridSize() ** 2) {
+      clearInterval(game.timer);
+      showMessage(" You matched all cards! Well done!");
+      disableAllCards();
+    }
+  } else {
+    setTimeout(() => {
+      card1.classList.remove("flipped");
+      card2.classList.remove("flipped");
+      game.flippedCards = [];
+    }, 800);
+  }
 }
 
 function disableAllCards() {
-  document.querySelectorAll('.card').forEach(card => {
-    card.style.pointerEvents = 'none';
+  document.querySelectorAll(".card").forEach(card => {
+    card.style.pointerEvents = "none";
   });
 }
 
-function resetGame (){
-flippedCards = [];
-renderCards();
-setupCardClicks();
-showMessage('');
-startTimer();
-
-}
-
-document.querySelector('#RestartButton').addEventListener('click, resetGame');
-document.querySelector('#NextDifficulty').addEventListener('click,resetGame');
-
-
-document.addEventListener('DOMContentLoaded',() =>{
-    renderCards();
-    setupCardClicks();
-    startTimer();
-
-
-
+elements.restartButton.addEventListener("click", () => {
+  createCards();
 });
+
+elements.nextDifficultyButton.addEventListener("click", () => {
+  if (game.level < 2) {
+    game.level++;
+    createCards();
+  } else {
+    showMessage("You've completed all difficulty levels!");
+  }
+});
+
+window.addEventListener("DOMContentLoaded", createCards);
+
+if( windows.location .event ){
+
+  
+}
