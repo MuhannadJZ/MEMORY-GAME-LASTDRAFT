@@ -18,3 +18,23 @@ const cardData = [
     {id: 17, img: 'villamamas.png'}
     {id: 18, img: 'zaytzaytoon.png'}
 ]
+
+const container = document.querySelector('#C-container')
+let cards=[];
+
+function renderCards(){
+    cards= [...cardData, ...cardData].sort(()=>Math.random()-0.5);
+    container.innerHTML='';
+
+    cards.forEach(card => {
+        const cardE1 = document.createElement('div');
+        cardE1.classList.add('card');
+        cardE1.dataset.id= card.id;
+        cardE1.innerHTML=`<div class="card-inner">
+        <div class="card-front">?</div>
+        <div class="card-back"><img src="images/${card.img}" alt=""/></div>
+        </div>
+        `;
+        container.appendChild(cardE1);
+    });
+}
