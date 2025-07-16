@@ -60,3 +60,26 @@ function setupCardClicks() {
     });
   });
 }
+const timerEl = document.querySelector('#Timer');
+let timeLeft = 60;
+let timerInterval;
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timeLeft = 60;
+  updateTimer();
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimer();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      showMessage("Time's up!", "#d9534f");
+      disableAllCards();
+    }
+  }, 1000);
+}
+
+function updateTimer() {
+  timerEl.textContent = `Time: ${timeLeft}s`;
+}
+
