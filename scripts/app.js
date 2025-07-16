@@ -82,4 +82,27 @@ function startTimer() {
 function updateTimer() {
   timerEl.textContent = `Time: ${timeLeft}s`;
 }
+const messageEl = document.querySelector('#Message');
 
+function showMessage(msg, color) {
+  messageEl.textContent = msg;
+  messageEl.style.color = color;
+}
+
+function disableAllCards() {
+  document.querySelectorAll('.card').forEach(card => {
+    card.style.pointerEvents = 'none';
+  });
+}
+
+function resetGame (){
+flippedCards = [];
+renderCards();
+setupCardClicks();
+showMessage('');
+startTimer();
+
+}
+
+document.querySelector('#RestartButton').addEventListener('click, resetGame');
+document.querySelector('#NextDifficulty').addEventListener('click,resetGame');
