@@ -1,4 +1,4 @@
-<h1>🧠 Memory Match Game – Web Version</h1>
+<h1>🧠 Memory Match Game </h1>
 
 <img src="assets/memory.png" alt="Game Screenshot" width="600" />
 
