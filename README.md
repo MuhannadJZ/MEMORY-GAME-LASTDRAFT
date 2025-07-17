@@ -1,32 +1,18 @@
-<h1>Memory Matching Game</h1>
-A fun memory game where you flip cards to find matching pairs.
+<h1>🧠 Memory Match Game – Web Version</h1>
 
-<h1>How to Play</h1>
-Click a card to flip it.
+<img src="assets/screenshot.png" alt="Game Screenshot" width="600" />
 
-Flip another card to find its match.
+<p>
+This is a browser-based memory card-matching game built with HTML, CSS, and JavaScript. The game increases in difficulty as you advance, adding more cards and reducing the time available to find all the pairs. Flip two cards at a time to find matches, and beat the clock!
+</p>
 
-If cards match, they stay flipped.
+---
 
-If not, they flip back.
+<h2>🎮 Game Features</h2>
 
-Match all cards before time runs out to win.
-
-Use Restart to try again.
-
-Use Next Difficulty to play harder levels.
-
-<h1>Features</h1>
-3 difficulty levels (small to large grids)
-
-Countdown timer
-
-Flip animation
-
-Win and lose messages
-
-<h1>How to Run</h1>
-Open index.html in your web browser and start playing!
-
-<h1>Made by</h1>
-MJ
+<ul>
+  <li>Three levels of difficulty (2x2, 4x4, 6x6 grids)</li>
+  <li>Matching logic with card flip animations</li>
+  <li>Timer countdown and win/loss conditions</li>
+  <li>Clickable <strong>Restart</strong> and <strong>Next Difficulty</strong> buttons</li>
+</ul>
