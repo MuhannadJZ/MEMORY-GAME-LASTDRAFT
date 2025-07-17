@@ -26,4 +26,8 @@ Click on any card to flip it. You can flip two cards at a time. If both cards ma
 </p>
 
 <p>
-Match all card pa
+Match all card pairs to win</p>
+
+<h2> Credits </h2>
+
+<P>Created with Passion by MJ</p>
